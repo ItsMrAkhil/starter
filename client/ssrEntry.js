@@ -7,9 +7,11 @@ import Helmet from 'react-helmet'
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 import { minify } from 'html-minifier';
+import { Provider } from 'react-redux';
 
 import stats from '../public/react-loadable.json';
 import routes from './routes';
+import store from './ssrConfigureStore';
 
 const app = express();
 const PORT = (parseInt(process.env.PORT, 10) || 9300) + 1;
@@ -21,11 +23,13 @@ const ssrMiddleware = (req, res) => {
   const context = {};
   const modules = [];
   const content = ReactDOMServer.renderToString(
-    <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
-      <StaticRouter location={req.url} context={context}>
-        {renderRoutes(routes)}
-      </StaticRouter>
-    </Loadable.Capture>
+    <Provider store={store(req)} >
+      <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+        <StaticRouter location={req.url} context={context}>
+          {renderRoutes(routes)}
+        </StaticRouter>
+      </Loadable.Capture>
+    </Provider>
   );
   const helmet = Helmet.renderStatic();
   const bundles = getBundles(stats, modules);

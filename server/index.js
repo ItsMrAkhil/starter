@@ -26,6 +26,15 @@ app.use(webpackHotMiddleware(compiler));
 app.use(express.static('public'));
 
 const SSR_PROXY_URL = `${ip.address()}:${PORT + 1}`;
+const ROOT_URL = 'http://localhost:9301';
+
+app.use('/api', proxy('localhost:3001', {
+  proxyReqPathResolver: function (req) {
+    console.log(require('url').parse(req.url).path);
+    return require('url').parse(req.url).path;
+  },
+}));
+
 app.get('*', proxy(SSR_PROXY_URL));
 
 app.listen(PORT, (err) => {
@@ -35,3 +44,11 @@ app.listen(PORT, (err) => {
     console.log(`Server started at ${PORT}`);
   }
 });
+
+const dummyApp = express();
+
+dummyApp.get('/:name', (req, res) => {
+  res.status(500).json({ name: req.params.name });
+});
+
+dummyApp.listen(3001);
