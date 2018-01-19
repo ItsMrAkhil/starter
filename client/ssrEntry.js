@@ -29,7 +29,7 @@ const ssrMiddleware = (req, res) => {
   );
   const helmet = Helmet.renderStatic();
   const bundles = getBundles(stats, modules);
-  // const bundleScripts = bundles.map((bundle) => `<script src="${bundle.file}"></script>`).join('\n');
+  const bundleScripts = bundles.map((bundle) => `<script src="${bundle.file}"></script>`).join('\n');
   const htmlContent = `
     <!doctype html>
     <html>
@@ -42,6 +42,7 @@ const ssrMiddleware = (req, res) => {
         <div id="root">
         ${content}
         <script src="main.js"></script>
+        ${bundleScripts}
         <script>window.main();</script></div>
       </body>
     </html>

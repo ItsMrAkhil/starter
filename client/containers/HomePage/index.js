@@ -10,7 +10,7 @@ export default class HomePage extends React.Component {
           <title> This is not home page </title>
         </Helmet>
         <h1>
-          Home Page Component
+          Home Page Component!
         </h1>
         <Link to="/Akhil">Link to user the page</Link>
       </div>
