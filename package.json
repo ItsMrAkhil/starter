@@ -14,6 +14,7 @@
     "express": "^4.16.2",
     "express-http-proxy": "^1.1.0",
     "html-minifier": "^3.5.8",
+    "immutable": "^3.8.2",
     "ip": "^1.1.5",
     "loadable-components": "^0.4.0",
     "prop-types": "^15.6.0",
@@ -26,6 +27,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

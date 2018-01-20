@@ -48,7 +48,8 @@ app.listen(PORT, (err) => {
 const dummyApp = express();
 
 dummyApp.get('/:name', (req, res) => {
-  res.status(500).json({ name: req.params.name });
+  const { name } = req.params;
+  res.json({ name, length: name.length });
 });
 
 dummyApp.listen(3001);

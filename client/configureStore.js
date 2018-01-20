@@ -4,7 +4,7 @@ import axios from 'axios';
 import reducers from './reducers';
 
 const axiosInstance = axios.create({
-  baseURL: '/api/',
+  baseURL: '/api',
 });
 
 const isBrowser = typeof window === 'object';
@@ -26,7 +26,7 @@ const store = createStore(
 
 if (module.hot && process.env.NODE_ENV !== 'production') {
   module.hot.accept('./reducers', () => {
-    const nextRootReducer = require('./reducers');
+    const nextRootReducer = require('./reducers').default;
     store.replaceReducer(nextRootReducer);
   });
 }
