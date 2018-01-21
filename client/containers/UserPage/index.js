@@ -20,7 +20,7 @@ class UserPage extends React.Component {
         <Helmet>
           <title>Perfect User {user}</title>
         </Helmet>
-        <Link to="/"> Welcome {user}! </Link>
+        <Link to="/"> Welcome {user}! </Link> <span>Length : {this.props.length} </span>
       </React.Fragment>
     );
   }

@@ -5,6 +5,7 @@ const ip = require('ip');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const morgan = require('morgan');
 
 const webpackConfig = require('../internals/webpack/webpack.dev.babel');
 
@@ -29,10 +30,7 @@ const SSR_PROXY_URL = `${ip.address()}:${PORT + 1}`;
 const ROOT_URL = 'http://localhost:9301';
 
 app.use('/api', proxy('localhost:3001', {
-  proxyReqPathResolver: function (req) {
-    console.log(require('url').parse(req.url).path);
-    return require('url').parse(req.url).path;
-  },
+  proxyReqPathResolver: (req) => require('url').parse(req.url).path,
 }));
 
 app.get('*', proxy(SSR_PROXY_URL));
@@ -46,6 +44,8 @@ app.listen(PORT, (err) => {
 });
 
 const dummyApp = express();
+
+dummyApp.use(morgan('dev'));
 
 dummyApp.get('/:name', (req, res) => {
   const { name } = req.params;

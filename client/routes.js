@@ -14,7 +14,7 @@ export default [
       },
       {
         path: '/:user',
-        component: UserComponent,
+        ...UserComponent,
         exact: true,
       },
       {
