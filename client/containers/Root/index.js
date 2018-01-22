@@ -6,7 +6,7 @@ export default class Root extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        {renderRoutes(this.props.route.routes)} {/** Child routes won't render without this.*/}
+        {renderRoutes(this.props.route.routes)} {/** Child routes won't render without this. */}
       </React.Fragment>
     );
   }

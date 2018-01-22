@@ -21,8 +21,8 @@ export default [
         component: ({ staticContext = {} }) => {
           staticContext.notFound = true;
           return (<h1>Not Found Page</h1>);
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
-]
+];

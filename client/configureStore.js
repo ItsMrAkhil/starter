@@ -26,7 +26,7 @@ const store = createStore(
 
 if (module.hot && process.env.NODE_ENV !== 'production') {
   module.hot.accept('./reducers', () => {
-    const nextRootReducer = require('./reducers').default;
+    const nextRootReducer = require('./reducers').default; // eslint-disable-line global-require
     store.replaceReducer(nextRootReducer);
   });
 }

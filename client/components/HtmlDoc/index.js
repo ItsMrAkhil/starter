@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function HtmlDoc({ helmet, htmlContent }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         ${helmet.title.toComponent()}
         ${helmet.meta.toComponent()}

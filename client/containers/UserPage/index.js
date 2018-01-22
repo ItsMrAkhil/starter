@@ -8,7 +8,6 @@ import { fetchName } from './actions';
 import { selectLength } from './selectors';
 
 class UserPage extends React.Component {
-
   componentDidMount() {
     this.props.onFetchName(this.props.match.params.user);
   }
@@ -24,7 +23,7 @@ class UserPage extends React.Component {
       </React.Fragment>
     );
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchName: (name) => dispatch(fetchName(name)),

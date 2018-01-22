@@ -14,10 +14,10 @@ function ClientRoot() {
         {renderRoutes(routes)}
       </BrowserRouter>
     </Provider>
-  )
+  );
 }
 
-let ExportableComponent = ClientRoot;
+let ExportableComponent = ClientRoot; // eslint-disable-line import/no-mutable-exports
 
 if (process.env.NODE_ENV !== 'production') {
   ExportableComponent = hot(module)(ClientRoot);

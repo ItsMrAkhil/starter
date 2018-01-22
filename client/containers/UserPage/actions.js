@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { FETCH_NAME, FETCH_NAME_ERROR, FETCH_NAME_SUCCESS } from './constants';
 
 export const fetchName = (name) => async (dispatch, getState, api) => {
@@ -13,4 +12,4 @@ export const fetchName = (name) => async (dispatch, getState, api) => {
     console.log(err);
     dispatch({ type: FETCH_NAME_ERROR, payload: err.response.data });
   }
-}
+};

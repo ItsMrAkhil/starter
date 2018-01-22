@@ -26,12 +26,12 @@ const ssrMiddleware = (req, res) => {
         promises.push(route.loadData(customStore, match.params));
       }
     });
-    return promises.map((promise) => {
-      return new Promise((resolve, reject) => {
+    return promises.map((promise) => (
+      new Promise((resolve) => {
         promise.then(resolve).catch(resolve);
-      });
-    });
-  }
+      })
+    ));
+  };
 
   const render = () => {
     const context = {};
@@ -43,8 +43,7 @@ const ssrMiddleware = (req, res) => {
             {renderRoutes(routes)}
           </StaticRouter>
         </Loadable.Capture>
-      </Provider>
-    );
+      </Provider>);
     const helmet = Helmet.renderStatic();
     const bundles = getBundles(stats, modules);
     const bundleScripts = bundles.map((bundle) => `<script src="${bundle.file}"></script>`).join('\n');
@@ -77,10 +76,10 @@ const ssrMiddleware = (req, res) => {
       minifyURLs: true,
       html5: true,
     }));
-  }
+  };
 
   Promise.all(loadBranchData()).then(render).catch(render);
-}
+};
 
 app.get('*', ssrMiddleware);
 
@@ -92,4 +91,4 @@ Loadable.preloadAll().then(() => {
       console.log(`SSR service running on port ${PORT}`);
     }
   });
-})
+});
