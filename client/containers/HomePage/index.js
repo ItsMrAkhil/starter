@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+import image from '../../assets/images/photo.jpg';
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -12,6 +13,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
         <h1>
           Home Page Component!
         </h1>
+        <img src={image} alt="" />
         <Link to="/Akhil">Link to user the page</Link>
       </div>
     );

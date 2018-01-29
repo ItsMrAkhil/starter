@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
-const serverLocation = 'server/middlewares/generated.ssrEntry.js';
+const serverLocation = 'dev-build/generated.ssrEntry.js';
 
 module.exports = {
   name: 'server',
@@ -15,7 +15,7 @@ module.exports = {
     path.join(process.cwd(), 'client/ssrEntry.js'),
   ],
   output: {
-    path: path.join(process.cwd(), 'server', 'middlewares'),
+    path: path.join(process.cwd(), 'dev-build'),
     filename: 'generated.ssrEntry.js',
     publicPath: '/',
     libraryTarget: 'commonjs2',
@@ -43,6 +43,7 @@ module.exports = {
           ],
         },
       },
+      { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=images/[name]-[hash].[ext]' },
     ],
   },
   plugins: [
