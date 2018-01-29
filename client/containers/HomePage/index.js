@@ -3,7 +3,21 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import image from '../../assets/images/photo.jpg';
 
-export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: 'Akhil',
+    };
+    this.handleUserChange = this.handleUserChange.bind(this);
+  }
+
+  handleUserChange(evt) {
+    this.setState({
+      user: evt.target.value,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -16,7 +30,9 @@ export default class HomePage extends React.Component { // eslint-disable-line r
         <img src={image} alt="" height="300" />
         <br />
         <br />
-        <Link to="/any-user">Link to user the page</Link>
+        <strong>Type username and change user</strong> <br /><br />
+        <input value={this.state.user} onChange={this.handleUserChange} placeholder="user" /> <br /><br />
+        <Link to={`/${this.state.user}`}>Link to user the page</Link>
       </div>
     );
   }

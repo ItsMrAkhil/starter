@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import { fetchName } from './actions';
 import { selectLength } from './selectors';
+import './styles.css';
 
 class UserPage extends React.Component {
   componentDidMount() {
@@ -23,7 +24,7 @@ class UserPage extends React.Component {
         <h2>Welcome {user}</h2>
         <code>Below Name Length Comes from server</code><br /><br />
         <span>Length : {this.props.length} </span> <br /><br />
-        <Link to="/"> Back to Home</Link>
+        <Link to="/"><button> Back to Home</button></Link>
       </React.Fragment>
     );
   }
