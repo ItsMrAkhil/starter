@@ -9,7 +9,6 @@ export const fetchName = (name) => async (dispatch, getState, api) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log(err);
     dispatch({ type: FETCH_NAME_ERROR, payload: err.response.data });
   }
 };
