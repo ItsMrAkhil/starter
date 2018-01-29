@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types';
 
 import { fetchName } from './actions';
 import { selectLength } from './selectors';
@@ -19,11 +20,20 @@ class UserPage extends React.Component {
         <Helmet>
           <title>Perfect User {user}</title>
         </Helmet>
-        <Link to="/"> Welcome {user}! </Link> <span>Length : {this.props.length} </span>
+        <h2>Welcome {user}</h2>
+        <code>Below Name Length Comes from server</code><br /><br />
+        <span>Length : {this.props.length} </span> <br /><br />
+        <Link to="/"> Back to Home</Link>
       </React.Fragment>
     );
   }
 }
+
+UserPage.propTypes = {
+  onFetchName: PropTypes.func.isRequired,
+  length: PropTypes.number.isRequired,
+  match: PropTypes.object.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchName: (name) => dispatch(fetchName(name)),

@@ -13,8 +13,10 @@ export default class HomePage extends React.Component { // eslint-disable-line r
         <h1>
           Home Page Component!
         </h1>
-        <img src={image} alt="" />
-        <Link to="/Akhil">Link to user the page</Link>
+        <img src={image} alt="" height="300" />
+        <br />
+        <br />
+        <Link to="/any-user">Link to user the page</Link>
       </div>
     );
   }

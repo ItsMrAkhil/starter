@@ -9,7 +9,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'eventsource-polyfill', // Necessary for hot reloading with IE
-    'webpack-hot-middleware/client?reload=true&http://localhost:9300',
+    'webpack-hot-middleware/client?reload=true',
     'react-hot-loader/patch',
     path.join(process.cwd(), 'client/app.js'), // Start with js/app.js
   ],
@@ -32,6 +32,7 @@ module.exports = {
           ],
           plugins: [
             'react-loadable/babel',
+            'react-hot-loader/babel',
           ],
         },
       },
