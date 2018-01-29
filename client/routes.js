@@ -1,5 +1,5 @@
-import React from 'react';
 import Root from './containers/Root';
+import NotFound from './components/NotFound';
 import HomeComponent from './containers/HomePage/Loadable';
 import UserComponent from './containers/UserPage/Loadable';
 
@@ -18,10 +18,7 @@ export default [
         exact: true,
       },
       {
-        component: ({ staticContext = {} }) => {
-          staticContext.notFound = true;
-          return (<h1>Not Found Page</h1>);
-        },
+        component: NotFound,
       },
     ],
   },

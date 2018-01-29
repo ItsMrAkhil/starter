@@ -40,6 +40,9 @@ const ssrMiddleware = (req, res) => {
           </StaticRouter>
         </Loadable.Capture>
       </Provider>);
+    if (context.notFound) {
+      res.status(404);
+    }
     const helmet = Helmet.renderStatic();
     const bundles = getBundles(stats, modules);
     const bundleScripts = bundles.map((bundle) => `<script src="${bundle.file}"></script>`).join('\n');
