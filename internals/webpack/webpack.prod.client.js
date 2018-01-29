@@ -46,7 +46,7 @@ module.exports = {
   },
   plugins: [
     new ReactLoadablePlugin({
-      filename: path.resolve(process.cwd(), 'public/react-loadable.json'),
+      filename: path.resolve(process.cwd(), 'build/react-loadable.json'),
     }),
     new webpack.DefinePlugin({
       'process.env': {

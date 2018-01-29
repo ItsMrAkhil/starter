@@ -66,7 +66,7 @@ module.exports = {
       failOnError: false, // show a warning when there is a circular dependency
     }),
     new ReactLoadablePlugin({
-      filename: path.resolve(process.cwd(), 'public/react-loadable.json'),
+      filename: path.resolve(process.cwd(), 'build/react-loadable.json'),
     }),
     new ExtractTextPlugin('styles.css'),
   ],

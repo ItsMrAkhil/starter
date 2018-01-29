@@ -9,7 +9,7 @@ import { minify } from 'html-minifier';
 import { Provider } from 'react-redux';
 
 import HtmlDoc from './components/HtmlDoc';
-import stats from '../public/react-loadable.json';
+import stats from '../build/react-loadable.json';
 import routes from './routes';
 import store from './ssrConfigureStore';
 
