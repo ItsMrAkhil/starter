@@ -12,4 +12,4 @@ window.main = () => {
       <ClientRoot />
     ), document.getElementById('root'));
   });
-}
+};

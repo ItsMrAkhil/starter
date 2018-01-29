@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import PropTypes from 'prop-types';
+import 'normalize.css';
 
 export default class Root extends React.PureComponent {
   render() {

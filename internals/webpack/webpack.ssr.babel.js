@@ -34,9 +34,15 @@ module.exports = {
           ],
           plugins: [
             'react-loadable/babel',
-          ]
+            [
+              'babel-plugin-transform-require-ignore',
+              {
+                extensions: ['.less', '.sass', '.css'],
+              },
+            ],
+          ],
         },
-      }
+      },
     ],
   },
   plugins: [
@@ -49,7 +55,7 @@ module.exports = {
       },
     }),
     new WebpackShellPlugin({
-      onBuildEnd: [`nodemon --watch ${serverLocation} ${serverLocation}`],
+      onBuildEnd: [`nodemon -q --watch ${serverLocation} ${serverLocation}`],
       dev: true,
     }),
   ],

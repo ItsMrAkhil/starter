@@ -3,3 +3,4 @@ npm-debug.log
 .env
 server/middlewares/generated.*
 public/react-loadable.json
+webpack-assets.json

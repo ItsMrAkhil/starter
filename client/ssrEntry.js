@@ -3,13 +3,13 @@ import express from 'express';
 import { StaticRouter } from 'react-router-dom';
 import ReactDOMServer from 'react-dom/server';
 import { matchRoutes, renderRoutes } from 'react-router-config';
-import Helmet from 'react-helmet'
+import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 import { minify } from 'html-minifier';
 import { Provider } from 'react-redux';
-import serialize from 'serialize-javascript';
 
+import HtmlDoc from './components/HtmlDoc';
 import stats from '../public/react-loadable.json';
 import routes from './routes';
 import store from './ssrConfigureStore';
@@ -47,27 +47,16 @@ const ssrMiddleware = (req, res) => {
     const helmet = Helmet.renderStatic();
     const bundles = getBundles(stats, modules);
     const bundleScripts = bundles.map((bundle) => `<script src="${bundle.file}"></script>`).join('\n');
-    const htmlContent = `
-      <!doctype html>
-      <html>
-        <head>
-          <base href="/" />
-          <meta charset="UTF-8" />
-          ${helmet.title.toString()}
-        </head>
-        <body>
-          <div id="root">
-          ${content}
-          <script src="main.js"></script>
-          ${bundleScripts}
-          <script>
-            window.main();
-            window.__INITIAL_STATE__=${serialize(customStore.getState())}
-          </script></div>
-        </body>
-      </html>
-    `;
-    res.send(minify(htmlContent, {
+    const htmlContent = ReactDOMServer.renderToStaticMarkup(
+      <HtmlDoc
+        helmet={helmet}
+        content={content}
+        assets={JSON.parse(req.headers.assets)}
+        bundleScripts={bundleScripts}
+        store={customStore}
+      />
+    );
+    const minifiedHtmlContent = minify(htmlContent, {
       collapseWhitespace: true,
       trimCustomFragments: true,
       removeComments: true,
@@ -75,7 +64,8 @@ const ssrMiddleware = (req, res) => {
       minifyJS: true,
       minifyURLs: true,
       html5: true,
-    }));
+    });
+    res.send(`<!doctype html>${minifiedHtmlContent}`);
   };
 
   Promise.all(loadBranchData()).then(render).catch(render);

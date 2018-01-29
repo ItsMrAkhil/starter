@@ -5,11 +5,15 @@ import axios from 'axios';
 import reducers from './reducers';
 
 export default (req) => {
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+  if (req.cookies) {
+    headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
+  }
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:3001',
-    headers: {
-      cookie: req.get('cookie') || '',
-    },
+    headers,
   });
 
   const store = createStore(

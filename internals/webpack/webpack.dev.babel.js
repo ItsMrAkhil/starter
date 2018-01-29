@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   target: 'web',
@@ -34,6 +35,13 @@ module.exports = {
           ],
         },
       },
+      {
+        test: /.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader'],
+        }),
+      },
     ],
   },
   plugins: [
@@ -59,6 +67,7 @@ module.exports = {
     new ReactLoadablePlugin({
       filename: path.resolve(process.cwd(), 'public/react-loadable.json'),
     }),
+    new ExtractTextPlugin('styles.css'),
   ],
   resolve: {
     modules: ['app', 'node_modules'],

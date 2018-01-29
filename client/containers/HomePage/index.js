@@ -7,7 +7,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
     return (
       <div>
         <Helmet>
-          <title> This is not home page </title>
+          <title> This is the home page </title>
         </Helmet>
         <h1>
           Home Page Component!
