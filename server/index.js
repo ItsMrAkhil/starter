@@ -5,15 +5,18 @@ const ip = require('ip');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const morgan = require('morgan');
 const URL = require('url');
-const _ = require('lodash');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
-const webpackConfig = require('../internals/webpack/webpack.dev.babel');
+const logger = require('./logger');
+const webpackConfig = require('../internals/webpack/webpack.dev.client');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 const compiler = webpack(webpackConfig);
 const app = express();
@@ -34,9 +37,12 @@ function createWebpackMiddleware(complr, publicPath) {
   });
 }
 
-app.use(createWebpackMiddleware(compiler, webpackConfig.output.publicPath));
-app.use(webpackHotMiddleware(compiler));
+if (isDev) {
+  app.use(createWebpackMiddleware(compiler, webpackConfig.output.publicPath));
+  app.use(webpackHotMiddleware(compiler));
+}
 app.use(express.static('public'));
+app.use(express.static('build'));
 
 const SSR_PROXY_URL = `${ip.address()}:${PORT + 1}`;
 // const ROOT_URL = 'http://localhost:9301';
@@ -53,68 +59,46 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.use((req, res, next) => {
-  if (req.cookies) {
-    req.headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
-  }
-  const assets = res.locals.webpackStats ? res.locals.webpackStats.toJson().assetsByChunkName : { main: [] };
-  req.headers.assets = JSON.stringify(assets);
-  next();
+app.use('/api/:name', (req, res) => {
+  res.json({ name: req.params.name, length: req.params.name.length });
 });
 
 app.use('/api', proxy('https://api.zaggle.in/', {
   proxyReqPathResolver: (req) => `/api/v1${URL.parse(req.url).path}`,
 }));
 
-app.get('*', proxy(SSR_PROXY_URL));
+app.use((req, res, next) => {
+  if (req.cookies) {
+    req.headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
+  }
+  let assets = '{main:[]}';
+  if (isDev) {
+    assets = res.locals.webpackStats ? res.locals.webpackStats.toJson().assetsByChunkName : { main: [] };
+  } else {
+    const webpackStats = path.resolve(process.cwd(), 'build', 'stats.json');
+    if (fs.existsSync(webpackStats)) {
+      const stats = require('../build/stats.json'); // eslint-disable-line global-require
+      assets = stats.assetsByChunkName;
+    }
+  }
+  req.headers.assets = JSON.stringify(assets);
+  next();
+});
+
+if (isDev) {
+  app.get('*', proxy(SSR_PROXY_URL));
+} else {
+  const pathToSsrMiddleware = path.resolve(process.cwd(), 'server', 'middleware', 'generated.ssrMiddleware.js');
+  if (fs.existsSync(pathToSsrMiddleware)) {
+    const ssrMiddleware = require(pathToSsrMiddleware).default; // eslint-disable-line global-require
+    app.get('*', ssrMiddleware);
+  }
+}
 
 app.listen(PORT, (err) => {
   if (err) {
-    console.log(err);
+    logger.error(err);
   } else {
-    console.log(`Server started at ${PORT}`);
+    logger.success(`Server started at ${PORT}`);
   }
 });
-
-const dummyApp = express();
-
-dummyApp.use(bodyParser.urlencoded({ extended: false }));
-dummyApp.use(bodyParser.json());
-dummyApp.use(morgan('dev'));
-
-const users = [
-  {
-    uid: '#1462#',
-    user: 'akhil',
-    pwd: 'password1',
-  },
-  {
-    uid: '#2593#',
-    user: 'nandini',
-    pwd: 'password2',
-  },
-];
-
-dummyApp.post('/login', (req, res) => {
-  const foundUser = _.find(users, req.body);
-  if (foundUser) {
-    return res.json({ success: true, token: foundUser.uid });
-  }
-  return res.json({ success: false });
-});
-
-dummyApp.post('/is-token', (req, res) => {
-  let success = false;
-  const foundUser = _.find(users, { uid: req.body.token });
-  if (foundUser) {
-    success = true;
-  }
-  res.send({ success });
-});
-
-dummyApp.get('/:name', (req, res) => {
-  const { name } = req.params;
-  res.json({ name, length: name.length });
-});
-
-dummyApp.listen(3001);

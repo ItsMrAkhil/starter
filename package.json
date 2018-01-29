@@ -7,20 +7,32 @@
     "start": "run-p start:dev:*",
     "start:dev:ssr": "bnr -s start:dev:ssr",
     "start:dev:client": "bnr -s start:dev:client",
+    "start:production": "run-s build:* start:prod",
+    "start:prod": "bnr -s start:prod",
+    "build": "run-s build:*",
+    "build:clean": "rimraf ./build",
+    "build:client": "webpack --config internals/webpack/webpack.prod.client.js",
+    "build:ssr": "webpack --config internals/webpack/webpack.prod.ssr.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
     "start:dev:client": {
-      "command": "nodemon -q --ignore server/middlewares/generated.*.js --watch server server",
+      "command": "nodemon -q --watch server server",
       "env": {
         "NODE_ENV": "development"
       }
     },
     "start:dev:ssr": {
-      "command": "webpack --config  internals/webpack/webpack.ssr.babel.js",
+      "command": "webpack --config internals/webpack/webpack.dev.ssr.js",
       "env": {
         "BABEL_ENV": "node",
         "NODE_ENV": "development"
+      }
+    },
+    "start:prod": {
+      "command": "node server/",
+      "env": {
+        "NODE_ENV": "production"
       }
     }
   },
@@ -61,6 +73,7 @@
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.12",
     "babel-plugin-transform-require-ignore": "^0.1.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -84,14 +97,17 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
     "npm": "^5.6.0",
+    "offline-plugin": "^4.9.0",
     "react-hot-loader": "^4.0.0-beta.16",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-node-externals": "^1.6.0",
-    "webpack-shell-plugin": "^0.5.0"
+    "webpack-shell-plugin": "^0.5.0",
+    "webpack-stats-plugin": "^0.1.5"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

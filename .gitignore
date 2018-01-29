@@ -5,3 +5,5 @@ public/react-loadable.json
 webpack-assets.json
 build
 dev-build
+generated.ssrMiddleware.js
+dummyServer.js

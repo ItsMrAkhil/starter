@@ -12,7 +12,7 @@ export default (req) => {
     headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
   }
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://localhost:9302/api',
     headers,
   });
 

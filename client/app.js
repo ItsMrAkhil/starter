@@ -6,10 +6,13 @@ import ReactDOM from 'react-dom';
 import ClientRoot from './ClientRoot';
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
-window.main = () => {
-  Loadable.preloadReady().then(() => {
-    renderMethod((
-      <ClientRoot />
-    ), document.getElementById('root'));
-  });
-};
+
+if (process.env.NODE_ENV === 'production') {
+  require('offline-plugin/runtime').install(); // eslint-disable-line global-require
+}
+
+Loadable.preloadReady().then(() => {
+  renderMethod((
+    <ClientRoot />
+  ), document.getElementById('root'));
+});

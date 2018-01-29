@@ -43,7 +43,7 @@ module.exports = {
           ],
         },
       },
-      { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=images/[name]-[hash].[ext]' },
+      { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?emitFile=false&name=images/[name]-[hash].[ext]' },
     ],
   },
   plugins: [

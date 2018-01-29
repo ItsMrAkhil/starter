@@ -1,22 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
+const OfflinePlugin = require('offline-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
-  target: 'web',
-  devtool: 'eval-source-map',
   entry: [
-    'eventsource-polyfill', // Necessary for hot reloading with IE
-    'webpack-hot-middleware/client?reload=true&http://localhost:9300',
-    'react-hot-loader/patch',
-    path.join(process.cwd(), 'client/app.js'), // Start with js/app.js
+    path.join(process.cwd(), 'client/app.js'),
   ],
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
+    path: path.resolve(process.cwd(), 'build'),
     publicPath: '/',
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name]-[hash]-chunk.js',
   },
   module: {
     loaders: [
@@ -32,6 +30,7 @@ module.exports = {
           ],
           plugins: [
             'react-loadable/babel',
+            'transform-react-remove-prop-types',
           ],
         },
       },
@@ -46,32 +45,35 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      children: true,
-      minChunks: 2,
-      async: true,
-    }),
-    new CircularDependencyPlugin({
-      exclude: /a\.js|node_modules/, // exclude node_modules
-      failOnError: false, // show a warning when there is a circular dependency
-    }),
     new ReactLoadablePlugin({
       filename: path.resolve(process.cwd(), 'public/react-loadable.json'),
     }),
-    new ExtractTextPlugin('styles.css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      children: true,
+      minChunks: Infinity,
+      async: true,
+    }),
+    new ExtractTextPlugin('styles-[hash].css'),
+    new OfflinePlugin({
+      responseStrategy: 'network-first',
+      caches: 'all',
+      safeToUseOptionalCaches: true,
+      autoUpdate: 1000 * 60 * 48,
+      AppCache: false,
+    }),
+    new UglifyJSPlugin(),
+    new StatsWriterPlugin(),
   ],
   resolve: {
-    modules: ['app', 'node_modules'],
+    modules: ['client', 'node_modules'],
     extensions: [
       '.js',
       '.jsx',

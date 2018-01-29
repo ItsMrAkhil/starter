@@ -36,7 +36,6 @@ export default function HtmlDoc({
           dangerouslySetInnerHTML={{
             __html: `
             <script>
-              window.main();
               window.__INITIAL_STATE__=${serialize(store.getState())}
             </script>
             ${bundleScripts}
