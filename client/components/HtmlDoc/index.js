@@ -36,6 +36,7 @@ export default function HtmlDoc({
             .filter((file) => file.endsWith('.js'))
             .map((file) => <script key={uniqueId()} src={file} />) // Add main script tags
         }
+        {/** Initialize the redux state by using __INITIAL_STATE__ variable inside window. */}
         <div
           dangerouslySetInnerHTML={{
             __html: `
