@@ -19,8 +19,6 @@
 
 > **Note:** This starter is not for those who are new to React.js. In other words it is only for those who knows react well and who wants to create react apps with **Server Side Rendering**
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
-
 ### Usage
 
 Starter requires [Node.js](https://nodejs.org/) v6+ to run.
