@@ -12,20 +12,23 @@ const normalizeAssets = (assets) => (
 export default function HtmlDoc({
   helmet, content, bundleScripts, store, assets,
 }) {
+  const htmlAttrs = helmet.htmlAttributes.toComponent();
+  const bodyAttrs = helmet.bodyAttributes.toComponent();
   return (
-    <html lang="en">
+    <html lang="en" {...htmlAttrs}>
       <head>
         <base href="/" />
         <meta charSet="UTF-8" />
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
+        {helmet.link.toComponent()}
         {
           normalizeAssets(assets.main)
             .filter((file) => file.endsWith('.css'))
             .map((file) => <link key={uniqueId()} rel="stylesheet" href={file} />) // Add main stylesheet
         }
       </head>
-      <body>
+      <body {...bodyAttrs}>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         {/** Add rendered html content for the requested route */}
         {
