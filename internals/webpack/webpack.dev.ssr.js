@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
+// Path for generated ssrEntry file involves express server
 const serverLocation = 'dev-build/generated.ssrEntry.js';
 
 module.exports = {
@@ -37,7 +38,8 @@ module.exports = {
             [
               'babel-plugin-transform-require-ignore',
               {
-                extensions: ['.less', '.sass', '.css'],
+                // Skip css files to include in ssr dev build
+                extensions: ['.less', '.sass', '.css', 'scss'],
               },
             ],
           ],
@@ -48,6 +50,8 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(true),
+
+    // Limit entire build to one chunk.
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -55,6 +59,8 @@ module.exports = {
         PORT: JSON.stringify(process.env.PORT),
       },
     }),
+
+    // Start the proxy server at PORT+1 on build complete which keeps restarting on client code change.
     new WebpackShellPlugin({
       onBuildEnd: [`nodemon -q --watch ${serverLocation} ${serverLocation}`],
       dev: true,

@@ -1,3 +1,4 @@
+// Root file for the client side application
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -20,6 +21,7 @@ function ClientRoot() {
 let ExportableComponent = ClientRoot; // eslint-disable-line import/no-mutable-exports
 
 if (process.env.NODE_ENV !== 'production') {
+  // Export HMR enabled component if it is in dev mode
   ExportableComponent = hot(module)(ClientRoot);
 }
 

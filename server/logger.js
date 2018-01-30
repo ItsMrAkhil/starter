@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+// Logger file for logging info.
+
 const chalk = require('chalk');
 
 module.exports = {

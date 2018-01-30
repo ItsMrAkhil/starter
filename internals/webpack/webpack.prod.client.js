@@ -11,6 +11,7 @@ module.exports = {
     path.join(process.cwd(), 'client/app.js'),
   ],
   output: {
+    // Save main and chunk files in build folder
     path: path.resolve(process.cwd(), 'build'),
     publicPath: '/',
     filename: '[name]-[hash].js',
@@ -30,6 +31,8 @@ module.exports = {
           ],
           plugins: [
             'react-loadable/babel',
+
+            // Remove prop-types validation in production mode.
             'transform-react-remove-prop-types',
           ],
         },
@@ -61,7 +64,11 @@ module.exports = {
       minChunks: Infinity,
       async: true,
     }),
+
+    // Add a hash to the styles.js for build.
     new ExtractTextPlugin('styles-[hash].css'),
+
+    // Include offline plugin to work well in even in slow network connection
     new OfflinePlugin({
       responseStrategy: 'network-first',
       caches: 'all',
@@ -69,7 +76,11 @@ module.exports = {
       autoUpdate: 1000 * 60 * 48,
       AppCache: false,
     }),
+
+    // Uglify js to uglify the final build
     new UglifyJSPlugin(),
+
+    // Write all stats for knowing the build main files for ssr use in production
     new StatsWriterPlugin(),
   ],
   resolve: {
