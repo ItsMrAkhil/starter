@@ -5,14 +5,11 @@ import axios from 'axios';
 
 import reducers from './reducers';
 
-export default (req) => {
+export default () => {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
+    // Include other headers if you want.
   };
-  if (req.cookies) {
-    // Extract cookies from req object to create Authorization header for ssr
-    headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
-  }
   const axiosInstance = axios.create({
     // Change baseUrl for axios request from server side.
     baseURL: 'http://localhost:9300/api',

@@ -5,7 +5,7 @@ const ip = require('ip');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const URL = require('url');
+// const URL = require('url');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
@@ -48,43 +48,12 @@ app.use(express.static('build'));
 
 // Create proxy url based on the process.env.PORT
 const SSR_PROXY_URL = `${ip.address()}:${PORT + 1}`;
-// const ROOT_URL = 'http://localhost:9301';
-
-app.post('/login', (req, res) => {
-  // Create a random device_id for every new device
-  const device_id = crypto.randomBytes(6).toString('hex');
-
-  // Add the device_id and and other details to the body.
-  const body = Object.assign(req.body, { device_id, client_name: 'WebBrowser', client_version: 'WebBrowser' });
-
-  // Hit the login API of the main portal
-  axios.post('https://api.zaggle.in/api/v1/auth/basic', body).then((response) => {
-
-    // Attach cookies to the res object
-    res.cookie('token', response.data.token, { maxAge: 900000, httpOnly: true });
-    res.cookie('device_id', device_id, { maxAge: 900000, httpOnly: true });
-
-    // Send data with the cookies
-    res.json(response.data);
-  }).catch((error) => {
-    res.json(error.response.data || { success: false });
-  });
-});
 
 app.use('/api/:name', (req, res) => {
   res.json({ name: req.params.name, length: req.params.name.length });
 });
 
-// Create proxy for api hits
-app.use('/api', proxy('https://api.zaggle.in/', {
-  proxyReqPathResolver: (req) => `/api/v1${URL.parse(req.url).path}`,
-}));
-
 app.use((req, res, next) => {
-  if (req.cookies) {
-    // Get cookies from the client and attach them to create a Authorization header
-    req.headers.Authorization = `Token token=${req.cookies.token};client_key=client_key;device_id=${req.cookies.device_id}`;
-  }
   let assets = '{main:[]}';
   if (isDev) {
     // Use locals object to get webpackStats in dev
