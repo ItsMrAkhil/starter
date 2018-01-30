@@ -1,12 +1,15 @@
+// Proxy ssr server to work in dev mode.
 import express from 'express';
 import Loadable from 'react-loadable';
 import ssrMiddleware from './ssrMiddleware';
 import { success, error } from '../server/logger';
 const app = express();
+// Run ssr proxy server in port process.env.PORT+1
 const PORT = (parseInt(process.env.PORT, 10) || 9300) + 1;
 
 app.get('*', ssrMiddleware);
 
+// Load all loadable components before rendering in SSR
 Loadable.preloadAll().then(() => {
   app.listen(PORT, (err) => {
     if (err) {

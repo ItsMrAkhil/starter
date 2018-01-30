@@ -1,3 +1,4 @@
+// Define all your routes here
 import Root from './containers/Root';
 import NotFound from './components/NotFound';
 import HomeComponent from './containers/HomePage/Loadable';

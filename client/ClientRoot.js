@@ -12,6 +12,7 @@ function ClientRoot() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        {/* Render all routes by using react-router-config */}
         {renderRoutes(routes)}
       </BrowserRouter>
     </Provider>

@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
 
 const isBrowser = typeof window === 'object';
 
+// Add devtools extension in dev mode for better development.
 const composeEnhancers =
   isBrowser && process.env.NODE_ENV !== 'production' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
@@ -24,6 +25,8 @@ const store = createStore(
   enhancer,
 );
 
+
+// replace reducers in store after change (HMR)
 if (module.hot && process.env.NODE_ENV !== 'production') {
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers').default; // eslint-disable-line global-require

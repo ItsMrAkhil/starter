@@ -1,9 +1,9 @@
 /* eslint-disable react/no-danger */
+// HtmlDoc for rendering inside the server
 import React from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
 import { uniqueId } from 'lodash';
-
 
 const normalizeAssets = (assets) => (
   Array.isArray(assets) ? assets : [assets]
@@ -22,15 +22,16 @@ export default function HtmlDoc({
         {
           normalizeAssets(assets.main)
             .filter((file) => file.endsWith('.css'))
-            .map((file) => <link key={uniqueId()} rel="stylesheet" href={file} />)
+            .map((file) => <link key={uniqueId()} rel="stylesheet" href={file} />) // Add main stylesheet
         }
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+        {/** Add rendered html content for the requested route */}
         {
           normalizeAssets(assets.main)
             .filter((file) => file.endsWith('.js'))
-            .map((file) => <script key={uniqueId()} src={file} />)
+            .map((file) => <script key={uniqueId()} src={file} />) // Add main script tags
         }
         <div
           dangerouslySetInnerHTML={{
@@ -38,8 +39,7 @@ export default function HtmlDoc({
             <script>
               window.__INITIAL_STATE__=${serialize(store.getState())}
             </script>
-            ${bundleScripts}
-            `,
+            ${bundleScripts}`, // Add bundleScripts which comes from loadable-stats.json
           }}
         />
       </body>
