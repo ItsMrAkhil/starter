@@ -41,6 +41,12 @@ For production environment
 $ npm run start:production
 ```
 
+For generators
+
+```
+$ npm run generate
+```
+
 ### Todos
 
  - Add Jest and Enzyme Testing (PR Welcome)
