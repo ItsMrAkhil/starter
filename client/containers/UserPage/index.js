@@ -9,7 +9,7 @@ import { fetchName } from './actions';
 import { selectLength } from './selectors';
 import './styles.css';
 
-class UserPage extends React.Component {
+export class UserPage extends React.Component {
   componentDidMount() {
     this.props.onFetchName(this.props.match.params.user);
   }
