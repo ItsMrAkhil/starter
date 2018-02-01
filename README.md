@@ -2,6 +2,8 @@
 **Starter** is a react ssr enabled starter kit (SSR | Universal | Isomorphic).
 
 [![Build Status](https://travis-ci.org/ItsMrAkhil/starter.svg?branch=master)](https://travis-ci.org/ItsMrAkhil/starter)
+[![dependencies Status](https://david-dm.org/itsMrAkhil/starter/status.svg)](https://david-dm.org/itsMrAkhil/starter)
+[![devDependencies Status](https://david-dm.org/itsMrAkhil/starter/dev-status.svg)](https://david-dm.org/itsMrAkhil/starter?type=dev)
 
 #### Features
   - HMR (Hot Module Replace) enabled (Even SSR Enabled) in dev mode (Cool as shit.)
