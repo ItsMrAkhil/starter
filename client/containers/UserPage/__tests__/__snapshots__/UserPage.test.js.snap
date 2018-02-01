@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserPage /> renders 1`] = `
+Array [
+  <h2>
+    Welcome 
+    Akhil
+  </h2>,
+  <code>
+    Below Name Length Comes from server
+  </code>,
+  <br />,
+  <br />,
+  <span>
+    Length : 
+    5
+     
+  </span>,
+  " ",
+  <br />,
+  <br />,
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    <button>
+       Back to Home
+    </button>
+  </a>,
+]
+`;
