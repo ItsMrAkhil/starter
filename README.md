@@ -45,7 +45,7 @@ $ npm run start:production
 
  - Add Jest and Enzyme Testing (PR Welcome)
  - Separate common webpack configurations from webpack config files. And use webpack merge to combine all with the base config (PR Welcome)
- - Add generators for giving the common code for Components, Routes (PR welcome, Help Required)
+ - Add generators for giving the common code for Components, Routes (In Progress)
  - Make Reducers also lazy. Load reducers which are required for the perticular route. (PR Welcome, Help required.)
 
 License
