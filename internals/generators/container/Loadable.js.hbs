@@ -1,0 +1,27 @@
+/**
+ *
+ * Asynchronously loads the component for {{ properCase name }}
+ *
+ */
+
+import Loadable from 'react-loadable';
+
+const component = Loadable({
+  loader: () => import('../{{ properCase name }}/index'),
+  loading: () => null,
+});
+
+{{#if loadData}}
+const loadData = (store, params) => ( // eslint-disable-line no-unused-vars
+  Promise.all([
+    // store.dispatch(fetchSomething(params))
+  ])
+);
+{{/if}}
+
+export default {
+{{#if loadData}}
+  loadData,
+{{/if}}
+  component,
+};
