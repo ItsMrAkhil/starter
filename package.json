@@ -123,6 +123,7 @@
     "file-loader": "^1.1.6",
     "identity-obj-proxy": "^3.0.0",
     "install": "^0.10.2",
+    "jest": "^22.1.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
