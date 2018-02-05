@@ -45,7 +45,7 @@ For production environment
 $ npm run start:production
 ```
 
-For generators
+For generators (Try this magic. It'll be cool)
 
 ```
 $ npm run generate
@@ -53,9 +53,8 @@ $ npm run generate
 
 ### Todos
 
- - Add Jest and Enzyme Testing (PR Welcome)
+ - Add Jest and Enzyme Testing (Need to add testing to all components)
  - Separate common webpack configurations from webpack config files. And use webpack merge to combine all with the base config (PR Welcome)
- - Add generators for giving the common code for Components, Routes (In Progress)
  - Make Reducers also lazy. Load reducers which are required for the particular route. (PR Welcome, Help required.)
 
 License
