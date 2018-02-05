@@ -1,0 +1,65 @@
+/**
+*
+* {{ properCase name }}
+*
+*/
+
+import React, { {{{ type }}} } from 'react';
+{{#if helmet}}
+import Helmet from 'react-helmet';
+{{/if}}
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { select{{ properCase name }} } from './selectors';
+
+class {{ properCase name }} extends {{{ type }}} { // eslint-disable-line react/prefer-stateless-function
+  render() {
+    return (
+      <div>
+        {{#if helmet}}
+          <Helmet>
+            <title>{{ properCase name }}</title>
+          </Helmet>
+        {{/if}}
+        {{ properCase name }} {{{ type }}}
+      </div>
+    );
+  }
+}
+
+{{ properCase name }}.propTypes = {
+  dispatch: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+};
+
+{{#if loadData}}
+{{#if loadable}}
+{{else}}
+const loadData = (store, params) => ( // eslint-disable-line no-unused-vars
+  Promise.all([
+    // store.dispatch(fetchSomething(params))
+  ])
+);
+{{/if}}
+{{/if}}
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+});
+
+const mapStateToProps = createStructuredSelector({
+  {{ properCase name }}: select{{ properCase name }}(),
+});
+
+const component = connect(mapStateToProps, mapDispatchToProps)({{ properCase name }});
+
+export default {
+  component,
+  {{#if loadData}}
+  {{#if loadable}}
+  {{else}}
+  loadData,
+  {{/if}}
+  {{/if}}
+};
