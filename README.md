@@ -1,6 +1,10 @@
 # Starter
 **Starter** is a react ssr enabled starter kit (SSR | Universal | Isomorphic).
 
+[![Build Status](https://travis-ci.org/ItsMrAkhil/starter.svg?branch=master)](https://travis-ci.org/ItsMrAkhil/starter)
+[![dependencies Status](https://david-dm.org/itsMrAkhil/starter/status.svg)](https://david-dm.org/itsMrAkhil/starter)
+[![devDependencies Status](https://david-dm.org/itsMrAkhil/starter/dev-status.svg)](https://david-dm.org/itsMrAkhil/starter?type=dev)
+
 #### Features
   - HMR (Hot Module Replace) enabled (Even SSR Enabled) in dev mode (Cool as shit.)
   - [React Hot Loader 4](https://github.com/gaearon/react-hot-loader/tree/next)
@@ -51,8 +55,8 @@ $ npm run generate
 
  - Add Jest and Enzyme Testing (PR Welcome)
  - Separate common webpack configurations from webpack config files. And use webpack merge to combine all with the base config (PR Welcome)
- - Add generators for giving the common code for Components, Routes (PR welcome, Help Required)
- - Make Reducers also lazy. Load reducers which are required for the perticular route. (PR Welcome, Help required.)
+ - Add generators for giving the common code for Components, Routes (In Progress)
+ - Make Reducers also lazy. Load reducers which are required for the particular route. (PR Welcome, Help required.)
 
 License
 ----

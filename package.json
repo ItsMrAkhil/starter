@@ -14,7 +14,32 @@
     "build:client": "webpack --config internals/webpack/webpack.prod.client.js",
     "build:ssr": "webpack --config internals/webpack/webpack.prod.ssr.js",
     "generate": "plop --plopfile internals/generators/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react",
+      "stage-0"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "./internals/test/jestSetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "client/containers/**/*.js",
+      "client/components/**/*.js",
+      "!src/**/__tests__"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|scss)$": "identity-obj-proxy"
+    }
   },
   "betterScripts": {
     "start:dev:client": {
@@ -45,7 +70,7 @@
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^4.0.0",
+    "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-http-proxy": "^1.1.0",
     "html-minifier": "^3.5.8",
@@ -71,6 +96,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.12",
@@ -83,6 +109,9 @@
     "babel-preset-stage-0": "^6.24.1",
     "circular-dependency-plugin": "^4.4.0",
     "css-loader": "^0.28.9",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -92,7 +121,9 @@
     "eventsource-polyfill": "^0.9.6",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
+    "identity-obj-proxy": "^3.0.0",
     "install": "^0.10.2",
+    "jest": "^22.1.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
@@ -100,8 +131,9 @@
     "offline-plugin": "^4.9.0",
     "plop": "^1.9.1",
     "react-hot-loader": "^4.0.0-beta.16",
+    "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.1",
+    "style-loader": "^0.20.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.4",

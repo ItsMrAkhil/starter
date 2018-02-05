@@ -15,10 +15,6 @@ function trimTemplateFile(template) {
   return fs.readFileSync(path.join(__dirname, `./${template}`), 'utf8');
 }
 
-function trimTemplateFileToImport(template) {
-  return fs.readFileSync(path.join(__dirname, `./${template}`), 'utf8');
-}
-
 module.exports = {
   description: 'Add a route',
   prompts: [{
