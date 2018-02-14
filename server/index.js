@@ -8,8 +8,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 // const URL = require('url');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const axios = require('axios');
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 

@@ -68,7 +68,7 @@ const ssrMiddleware = (req, res) => {
       <HtmlDoc
         helmet={helmet}
         content={content}
-        assets={JSON.parse(req.headers.assets)}
+        assets={JSON.parse(req.headers.assets || '{"main":["main.js","styles.css"]}')}
         bundleScripts={bundleScripts}
         store={customStore}
       />
