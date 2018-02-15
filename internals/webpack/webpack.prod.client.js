@@ -44,7 +44,7 @@ module.exports = {
           use: ['css-loader'],
         }),
       },
-      { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=images/[name]-[hash].[ext]' },
+      { test: /\.(jpe?g|png|gif|svg|eot|svg|otf|ttf|woff|woff2)$/i, loader: 'file-loader?name=images/[name]-[hash].[ext]' },
     ],
   },
   plugins: [
